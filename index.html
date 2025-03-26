@@ -1,31 +1,261 @@
 <!DOCTYPE html>
-   <html lang="zh-CN">
-   <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>我的创意空间</title>
-       <link rel="stylesheet" href="style.css">
-   </head>
-   <body>
-       <header>
-           < img src="images/avatar.jpg" alt="头像" class="avatar">
-           <h1>林| 数字素材</h1>
-           <nav>
-               作品集
-               关于我
-               联系
-           </nav>
-       </header>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的数字素材库</title>
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --background: #f5f5f5;
+        }
 
-       <section id="gallery">
-           <h2>最新作品</h2>
-           <div class="grid">
-               < img src="images/project1.png" alt="光照素材">
-               <video controls poster="images/thumbnail.jpg">
-                   <source src="videos/demo.mp4" type="video/mp4">
-                   您的浏览器不支持视频播放
-               </video>
-           </div>
-       </section>
-   </body>
-   </html>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--background);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 上传区域样式 */
+        .upload-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .upload-zone {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary-color);
+            background: rgba(33, 150, 243, 0.05);
+        }
+
+        /* 素材展示网格 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .media-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .media-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .upload-zone {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-section">
+        <h1>我的数字素材库</h1>
+        <div class="upload-zone" id="dropZone">
+            <p>拖放文件至此或点击选择</p>
+            <input type="file" id="fileInput" hidden multiple accept="image/*, video/*">
+        </div>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+
+    <script>
+        // DOM元素引用
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+
+        // 处理文件选择
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        // 拖放事件处理
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#2196F3';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#ccc';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
+
+        // 文件输入变化处理
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // 文件处理函数
+        function handleFiles(files) {
+            [...files].forEach(file => {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    createMediaCard(file, e.target.result);
+                };
+
+                if (file.type.startsWith('image/')) {
+                    reader.readAsDataURL(file);
+                } else if (file.type.startsWith('video/')) {
+                    generateVideoThumbnail(file);
+                }
+            });
+        }
+
+        // 生成视频缩略图
+        function generateVideoThumbnail(file) {
+            const video = document.createElement('video');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            video.src = URL.createObjectURL(file);
+            video.addEventListener('loadeddata', () => {
+                video.currentTime = 2;
+            });
+
+            video.addEventListener('seeked', () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+                createMediaCard(file, canvas.toDataURL());
+            });
+        }
+
+        // 创建素材卡片
+        function createMediaCard(file, previewUrl) {
+            const card = document.createElement('div');
+            card.className = 'media-item';
+
+            const isVideo = file.type.startsWith('video/');
+            
+            card.innerHTML = `
+                <img src="${previewUrl}" class="media-thumbnail" alt="${file.name}">
+                ${isVideo ? '<div class="video-label">视频</div>' : ''}
+            `;
+
+            // 添加点击预览
+            card.addEventListener('click', () => {
+                if (isVideo) {
+                    showVideoPlayer(previewUrl);
+                } else {
+                    showImagePreview(previewUrl);
+                }
+            });
+
+            gallery.appendChild(card);
+        }
+
+        // 图片预览功能
+        function showImagePreview(url) {
+            const overlay = document.createElement('div');
+            overlay.style = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                cursor: zoom-out;
+            `;
+
+            const img = new Image();
+            img.src = url;
+            img.style.maxWidth = '90vw';
+            img.style.maxHeight = '90vh';
+            img.style.borderRadius = '8px';
+
+            overlay.appendChild(img);
+            overlay.addEventListener('click', () => overlay.remove());
+            
+            document.body.appendChild(overlay);
+        }
+
+        // 视频播放功能
+        function showVideoPlayer(url) {
+            const overlay = document.createElement('div');
+            overlay.style = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+
+            const video = document.createElement('video');
+            video.controls = true;
+            video.autoplay = true;
+            video.src = url;
+            video.style.maxWidth = '90vw';
+            video.style.maxHeight = '90vh';
+
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = '×';
+            closeBtn.style = `
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 2rem;
+                cursor: pointer;
+            `;
+            closeBtn.addEventListener('click', () => overlay.remove());
+
+            overlay.appendChild(video);
+            overlay.appendChild(closeBtn);
+            document.body.appendChild(overlay);
+        }
+    </script>
+</body>
+</html>
