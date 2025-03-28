@@ -1,84 +1,96 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 保持原有样式不变 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的照片墙 | GitHub Pages</title>
     <style>
-        /* 原有CSS样式保持不变 */
+        :root {
+            --gap: 15px;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 15px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3436;
+            margin-bottom: 2rem;
+        }
+
+        /* 照片墙网格布局 */
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--gap);
+            padding: var(--gap);
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            aspect-ratio: 1;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .photo-wall {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-wall {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="upload-section">
-        <h1>我的数字素材库</h1>
-        <div class="upload-zone" id="dropZone">
-            <p>拖放文件至此或点击选择</p>
-            <input type="file" id="fileInput" hidden multiple accept="image/*, video/*">
+    <div class="container">
+        <h1>📸 我的照片墙</h1>
+        <div class="photo-wall" id="photoWall">
+            <!-- 照片项 - 5张图片 -->
+            <div class="photo-item">
+                <img src="1.jpg" alt="照片1" loading="lazy">
+            </div>
+            <div class="photo-item">
+                <img src="2.jpg" alt="照片2" loading="lazy">
+            </div>
+            <div class="photo-item">
+                <img src="3.jpg" alt="照片3" loading="lazy">
+            </div>
+            <div class="photo-item">
+                <img src="4.jpg" alt="照片4" loading="lazy">
+            </div>
+            <div class="photo-item">
+                <img src="8.jpg" alt="照片5" loading="lazy">
+            </div>
         </div>
     </div>
-
-    <div class="gallery" id="gallery">
-        <!-- 预置示例内容 -->
-        <div class="media-item" data-type="image" data-src="images/sample1.jpg">
-            <img src="images/sample-thumb1.jpg" class="media-thumbnail" alt="示例图片1">
-        </div>
-        
-        <div class="media-item" data-type="video" data-src="videos/sample.mp4">
-            <img src="images/video-thumb1.jpg" class="media-thumbnail" alt="示例视频">
-            <div class="video-label">视频</div>
-        </div>
-    </div>
-
-    <script>
-        // 初始化示例素材
-        const sampleData = [
-            {
-                type: 'image',
-                thumb: 'images/sample-thumb1.jpg',
-                full: 'images/sample1.jpg',
-                name: '示例图片1'
-            },
-            {
-                type: 'video', 
-                thumb: 'images/video-thumb1.jpg',
-                full: 'videos/sample.mp4',
-                name: '示例视频'
-            }
-        ];
-
-        // 初始化加载示例素材
-        function initSampleMedia() {
-            sampleData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'media-item';
-                card.dataset.type = item.type;
-                card.dataset.src = item.full;
-
-                card.innerHTML = `
-                    <img src="${item.thumb}" class="media-thumbnail" alt="${item.name}">
-                    ${item.type === 'video' ? '<div class="video-label">视频</div>' : ''}
-                `;
-
-                // 添加点击事件
-                card.addEventListener('click', () => {
-                    if (item.type === 'video') {
-                        showVideoPlayer(item.full);
-                    } else {
-                        showImagePreview(item.full);
-                    }
-                });
-
-                gallery.appendChild(card);
-            });
-        }
-
-        // DOM加载完成后初始化
-        document.addEventListener('DOMContentLoaded', () => {
-            initSampleMedia();
-            
-            // 保持原有的事件监听逻辑
-            // [保持原有的拖拽和上传事件处理代码不变]
-        });
-
-        // 保持原有的showImagePreview和showVideoPlayer函数不变
-    </script>
 </body>
 </html>
