@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数字渲染素材-照片墙 | GitHub Pages</title>
+    <title>个人作品集 | 登录访问</title>
     <style>
         :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
             --gap: 15px;
             --shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -15,82 +17,148 @@
             padding: 20px;
             background: #f8f9fa;
             font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 15px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2d3436;
-            margin-bottom: 2rem;
-        }
-
-        /* 照片墙网格布局 */
-        .photo-wall {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--gap);
-            padding: var(--gap);
-        }
-
-        .photo-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
+        /* 登录容器样式 */
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            aspect-ratio: 1;
-        }
-
-        .photo-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .photo-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 400px;
+            margin-top: 5rem;
+            transition: all 0.3s ease;
         }
 
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .photo-wall {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        @media (max-width: 480px) {
-            .photo-wall {
-                grid-template-columns: 1fr;
-            }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
+
+        input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            height: 1.2rem;
+        }
+
+        /* 照片墙容器（初始隐藏） */
+        .gallery-container {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* 原有照片墙样式保持不变 */
+        .photo-wall { /* ...原有照片墙样式... */ }
+        .photo-item { /* ...原有照片项样式... */ }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📸 数字渲染素材-照片墙</h1>
-        <div class="photo-wall" id="photoWall">
-            <!-- 照片项 - 5张图片 -->
+    <!-- 登录界面 -->
+    <div class="login-container" id="loginContainer">
+        <h2 style="text-align: center; margin-bottom: 1.5rem;">作品集访问认证</h2>
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="error-message" id="errorMsg"></div>
+            <button type="submit">登录查看</button>
+        </form>
+    </div>
+
+    <!-- 照片墙内容 -->
+    <div class="gallery-container" id="galleryContainer">
+        <h1>📸 我的摄影作品</h1>
+        <div class="photo-wall">
             <div class="photo-item">
-                <img src="1.jpg" alt="照片1" loading="lazy">
+                <img src="1.jpg" alt="作品1" loading="lazy">
             </div>
             <div class="photo-item">
-                <img src="2.jpg" alt="照片2" loading="lazy">
+                <img src="2.jpg" alt="作品2" loading="lazy">
             </div>
             <div class="photo-item">
-                <img src="3.jpg" alt="照片3" loading="lazy">
+                <img src="3.jpg" alt="作品3" loading="lazy">
             </div>
             <div class="photo-item">
-                <img src="4.jpg" alt="照片4" loading="lazy">
+                <img src="4.jpg" alt="作品4" loading="lazy">
             </div>
             <div class="photo-item">
-                <img src="8.jpg" alt="照片5" loading="lazy">
+                <img src="8.jpg" alt="作品5" loading="lazy">
             </div>
         </div>
     </div>
+
+    <script>
+        // 简易认证配置（仅供演示使用）
+        const VALID_CREDENTIALS = {
+            username: "user123",
+            password: "pass123"
+        };
+
+        // DOM元素引用
+        const loginForm = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const loginContainer = document.getElementById('loginContainer');
+        const galleryContainer = document.getElementById('galleryContainer');
+
+        // 登录表单提交处理
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if(username === VALID_CREDENTIALS.username && password === VALID_CREDENTIALS.password) {
+                // 登录成功
+                errorMsg.textContent = '';
+                loginContainer.style.display = 'none';
+                galleryContainer.style.display = 'block';
+                document.title = "我的摄影作品集";
+            } else {
+                // 登录失败
+                errorMsg.textContent = '用户名或密码错误';
+                loginForm.reset();
+            }
+        });
+    </script>
 </body>
 </html>
