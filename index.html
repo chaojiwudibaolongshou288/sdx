@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人作品集 | 分类浏览</title>
+    <title>个人作品集 | 登录访问</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --gap: 15px;
-            --shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        /* 保持原有登录界面样式不变 */
-        body { /* ... */ }
-        .login-container { /* ... */ }
-        .login-form { /* ... */ }
-
-        /* 新增导航样式 */
+        /* 保持原有样式基础上新增以下内容 */
         .nav-container {
             display: flex;
             gap: 2rem;
@@ -27,128 +15,159 @@
 
         .nav-button {
             padding: 1rem 2rem;
-            background: var(--secondary-color);
+            background: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
         }
 
         .nav-button.active {
-            background: var(--primary-color);
+            background: #2c3e50;
+            transform: scale(1.05);
         }
 
-        /* 分类容器 */
         .category-container {
             display: none;
-            width: 100%;
-            max-width: 1200px;
         }
 
         .category-container.active {
             display: block;
         }
 
-        .category-title {
+        .gallery-title {
             text-align: center;
             margin-bottom: 2rem;
-            color: var(--primary-color);
-        }
-
-        /* 照片墙样式优化 */
-        .photo-wall {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: var(--gap);
-            padding: var(--gap);
-        }
-
-        .photo-item img {
-            transition: transform 0.3s;
-        }
-
-        .photo-item:hover img {
-            transform: scale(1.05);
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
-    <!-- 登录界面 -->
-    <div class="login-container" id="loginContainer">
-        <!-- 保持原有登录表单不变 -->
-    </div>
+    <!-- 登录界面保持不变 -->
 
-    <!-- 主内容区域 -->
-    <div class="gallery-container" id="galleryContainer" style="display: none;">
-        <!-- 导航菜单 -->
+    <!-- 照片墙内容 -->
+    <div class="gallery-container" id="galleryContainer">
+        <!-- 导航栏 -->
         <div class="nav-container">
-            <button class="nav-button active" data-category="anime">二次元</button>
-            <button class="nav-button" data-category="reality">三次元</button>
+            <button class="nav-button active" data-category="gallery1">我的摄影作品（1）</button>
+            <button class="nav-button" data-category="gallery2">我的摄影作品（2）</button>
         </div>
 
-        <!-- 二次元分类 -->
-        <div class="category-container active" id="animeCategory">
-            <h2 class="category-title">🎨 二次元作品</h2>
-            <div class="photo-wall" id="animeWall"></div>
+        <!-- 第一个作品集 -->
+        <div class="category-container active" id="gallery1">
+            <h1 class="gallery-title">📸 我的摄影作品（1）</h1>
+            <div class="photo-wall">
+                <!-- 手动添加10张照片 -->
+                <div class="photo-item">
+                    <img src="1.jpg" alt="作品1" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="2.jpg" alt="作品2" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="3.jpg" alt="作品3" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="4.jpg" alt="作品4" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="8.jpg" alt="作品5" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="9.jpg" alt="作品6" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="10.jpg" alt="作品7" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="11.jpg" alt="作品8" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="12.jpg" alt="作品9" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="13.jpg" alt="作品10" loading="lazy">
+                </div>
+            </div>
         </div>
 
-        <!-- 三次元分类 -->
-        <div class="category-container" id="realityCategory">
-            <h2 class="category-title">📷 三次元摄影</h2>
-            <div class="photo-wall" id="realityWall"></div>
+        <!-- 第二个作品集 -->
+        <div class="category-container" id="gallery2">
+            <h1 class="gallery-title">📸 我的摄影作品（2）</h1>
+            <div class="photo-wall">
+                <!-- 手动添加另外10张照片 -->
+                <div class="photo-item">
+                    <img src="14.jpg" alt="作品11" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="15.jpg" alt="作品12" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="16.jpg" alt="作品13" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="17.jpg" alt="作品14" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="18.jpg" alt="作品15" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="21.jpg" alt="作品16" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="22.jpg" alt="作品17" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="23.jpg" alt="作品18" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="24.jpg" alt="作品19" loading="lazy">
+                </div>
+                <div class="photo-item">
+                    <img src="25.jpg" alt="作品20" loading="lazy">
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // 照片数据配置
-        const PHOTO_DATA = {
-            anime: Array.from({length: 10}, (_, i) => `images/anime${i+1}.jpg`),
-            reality: Array.from({length: 10}, (_, i) => `images/reality${i+1}.jpg`)
-        };
-
-        // 登录成功后初始化
-        function initGallery() {
-            // 生成照片墙
-            Object.entries(PHOTO_DATA).forEach(([category, photos]) => {
-                const container = document.getElementById(`${category}Wall`);
-                photos.forEach((imgSrc, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'photo-item';
-                    item.innerHTML = `
-                        <img src="${imgSrc}" 
-                             alt="${category}作品${index+1}" 
-                             loading="lazy">
-                    `;
-                    container.appendChild(item);
+        // 新增分类切换功能
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有按钮的激活状态
+                document.querySelectorAll('.nav-button').forEach(btn => {
+                    btn.classList.remove('active');
                 });
-            });
-
-            // 绑定导航事件
-            document.querySelectorAll('.nav-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    // 切换按钮状态
-                    document.querySelectorAll('.nav-button').forEach(btn => 
-                        btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 切换分类显示
-                    const category = this.dataset.category;
-                    document.querySelectorAll('.category-container').forEach(div => 
-                        div.classList.remove('active'));
-                    document.getElementById(`${category}Category`).classList.add('active');
+                
+                // 设置当前按钮为激活状态
+                this.classList.add('active');
+                
+                // 获取目标分类ID
+                const targetCategory = this.dataset.category;
+                
+                // 隐藏所有分类
+                document.querySelectorAll('.category-container').forEach(container => {
+                    container.classList.remove('active');
                 });
+                
+                // 显示目标分类
+                document.getElementById(targetCategory).classList.add('active');
             });
-        }
+        });
 
-        // 修改原有登录提交逻辑
+        // 保持原有登录逻辑
+        const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            // 验证逻辑保持不变...
-            
-            // 登录成功后初始化画廊
-            if(验证通过) {
-                initGallery();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if(username === "user123" && password === "pass123") {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('galleryContainer').style.display = 'block';
+            } else {
+                document.getElementById('errorMsg').textContent = '用户名或密码错误';
             }
         });
     </script>
