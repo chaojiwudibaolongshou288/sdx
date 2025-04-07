@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数字素材系统 | 登录访问</title>
     <style>
-       
+      
         .nav-container {
             display: flex;
             gap: 2rem;
@@ -15,8 +15,8 @@
 
         .nav-button {
             padding: 1rem 2rem;
-            background: #3498db;
-            color: white;
+            background: #668294;
+            color: rgb(160, 59, 59);
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -50,13 +50,13 @@
     <div class="gallery-container" id="galleryContainer">
         <!-- 导航栏 -->
         <div class="nav-container">
-            <button class="nav-button active" data-category="gallery1">二次元（1）</button>
-            <button class="nav-button" data-category="gallery2">二点五次元（1）</button>
+            <button class="nav-button active" data-category="gallery1">二次元作品（1）</button>
+            <button class="nav-button" data-category="gallery2">二点五次元作品（1）</button>
         </div>
 
         <!-- 第一个作品集 -->
         <div class="category-container active" id="gallery1">
-            <h1 class="gallery-title">📸 二次元（1）</h1>
+            <h1 class="gallery-title">📸 二次元作品（1）</h1>
             <div class="photo-wall">
                 <!-- 手动添加10张照片 -->
                 <div class="photo-item">
@@ -94,17 +94,17 @@
 
         <!-- 第二个作品集 -->
         <div class="category-container" id="gallery2">
-            <h1 class="gallery-title">📸 二点五次元（1）</h1>
+            <h1 class="gallery-title">📸 二点五次元作品（1）</h1>
             <div class="photo-wall">
                 <!-- 手动添加另外10张照片 -->
                 <div class="photo-item">
-                    <img src="14.jpg" alt="作品11" loading="lazy">
+                    <img src="26.jpg" alt="作品11" loading="lazy">
                 </div>
                 <div class="photo-item">
-                    <img src="15.jpg" alt="作品12" loading="lazy">
+                    <img src="27.jpg" alt="作品12" loading="lazy">
                 </div>
                 <div class="photo-item">
-                    <img src="16.jpg" alt="作品13" loading="lazy">
+                    <img src="28.jpg" alt="作品13" loading="lazy">
                 </div>
                 <div class="photo-item">
                     <img src="17.jpg" alt="作品14" loading="lazy">
@@ -163,13 +163,15 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if(username === "user123" && password === "pass123") {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('galleryContainer').style.display = 'block';
+            // 仅验证密码（pass123），用户名可任意输入
+            if(password === "pass123") {  
+                loginContainer.style.display = 'none';
+                galleryContainer.style.display = 'block';
+                document.title = `${username}的作品集`; // 动态显示输入的用户名
             } else {
-                document.getElementById('errorMsg').textContent = '用户名或密码错误';
+                document.getElementById('errorMsg').textContent = '密码错误';
             }
         });
-    </script>
+</script>
 </body>
 </html>
